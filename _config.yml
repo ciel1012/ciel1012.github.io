@@ -1,12 +1,12 @@
 # Site settings
 title: Ciel Blog
-SEOTitle: 你的博客 | Your Blog
+SEOTitle: Ciel的博客 | Ciel Blog
 header-img: img/home-bg.jpg
 email: 1915156333@gmail.com
 description: ""
 keyword: ""
-url: "http://Ciel.github.io"              # your host, for absolute URL
-baseurl: "/Ciel.github.io"         # for example, '/blog' if your blog hosted on 'host/blog'
+url: "http://ciel.github.io"              # your host, for absolute URL
+baseurl: "/ciel.github.io"         # for example, '/blog' if your blog hosted on 'host/blog'
 
 
 
