@@ -2,7 +2,7 @@
     "name": "ciel-blog",
     "title": "ciel Blog",
     "version": "1.0.0",
-    "homepage": "http://ciel.github.io",
+    "homepage": "http://ciel1012.github.io",
     "author": "Ciel",
     "devDependencies": {
         "grunt": "~0.4.5",
@@ -13,7 +13,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/ciel1012/ciel.github.io.git"
+        "url": "https://github.com/ciel1012/ciel1012.github.io.git"
     },
     "scripts": {
         "preview": "cd _site; python -m SimpleHTTPServer 8020",
