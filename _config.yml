@@ -15,6 +15,7 @@ RSS: false
 weibo_username:    ciel95
 zhihu_username:     ciel1012
 github_username:    ciel1012
+csdn_username:      ciel_1012
 #twitter_username:  huxpro
 #facebook_username:  huxpro
 
@@ -75,7 +76,7 @@ sidebar-avatar: /img/ciel.jpg   # use absolute URL, seeing it's used in both `/`
 
 # Featured Tags
 featured-tags: true                     # whether or not using Feature-Tags
-featured-condition-size: 1              # A tag will be featured if the size of it is more than this condition value
+featured-condition-size: 1         # A tag will be featured if the size of it is more than this condition value
 
 
 
