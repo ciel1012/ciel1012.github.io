@@ -66,13 +66,20 @@ layout: default
                     {% endif %}
                 </ul>  
 
-                {% if site.disqus_username %}
-                <!-- disqus 评论框 start -->
-                <div class="comment">
-                    <div id="disqus_thread" class="disqus-thread"></div>
-                </div>
-                <!-- disqus 评论框 end -->
-                {% endif %}
+                        <div id="gitmentContainer"></div>
+		<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+		<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+		<script>
+		var gitment = new Gitment({
+		    owner: 'ciel1012',
+		    repo: 'ciel1012.github.io',
+		    oauth: {
+		        client_id: 'daf6ad86163a5feeaa22',
+		        client_secret: 'bfe72eb8000e5cf60086fddf0eae5e7bf4180745',
+		    },
+		});
+		gitment.render('gitmentContainer');
+		</script>
 
             </div>
 
@@ -112,20 +119,6 @@ layout: default
                 {% endif %}
             </div>
         </div>
-        <div id="gitmentContainer"></div>
-						<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-						<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-						<script>
-						var gitment = new Gitment({
-						    owner: 'ciel1012',
-						    repo: 'ciel1012.github.io',
-						    oauth: {
-						        client_id: 'daf6ad86163a5feeaa22',
-						        client_secret: 'bfe72eb8000e5cf60086fddf0eae5e7bf4180745',
-						    },
-						});
-						gitment.render('gitmentContainer');
-						</script>
     </div>
 </article>
 
