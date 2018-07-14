@@ -79,21 +79,6 @@ layout: default
 
             </div>
 
-        	<div id="gitmentContainer"></div>
-			<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-			<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-			<script>
-			var gitment = new Gitment({
-			    owner: 'ciel1012',
-			    repo: 'https://github.com/ciel1012/ciel1012.github.io.git',
-			    oauth: {
-			        client_id: 'daf6ad86163a5feeaa22',
-			        client_secret: 'bfe72eb8000e5cf60086fddf0eae5e7bf4180745',
-			    },
-			});
-			gitment.render('gitmentContainer');
-			</script>
-
 
     <!-- Sidebar Container -->
             <div class="
@@ -134,7 +119,20 @@ layout: default
 </article>
 
 
-
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+    owner: 'ciel1012',
+    repo: 'ciel1012.github.io',
+    oauth: {
+        client_id: 'daf6ad86163a5feeaa22',
+        client_secret: 'bfe72eb8000e5cf60086fddf0eae5e7bf4180745',
+    },
+});
+gitment.render('gitmentContainer');
+</script>
 
 {% if site.disqus_username %}
 <!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
