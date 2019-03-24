@@ -79,23 +79,23 @@ featured-tags: true                     # whether or not using Feature-Tags
 featured-condition-size: 1         # A tag will be featured if the size of it is more than this condition value
 
 
+#gitment
+comment_gitment_repo: cielOAuth
+comment_gitment_clientId: daf6ad86163a5feeaa22
+comment_gitment_clientSecret: bfe72eb8000e5cf60086fddf0eae5e7bf4180745
 
 # Friends
 friends: [
     {
         title: "天才宝藏",
         href: "http://zhuowl.github.io"
-    },{
+    },
+    {
         title: "马老板",
         href: "http://blog.csdn.net/qq_31336891"
-    },{
+    },
+    {
         title: "王状元",
         href: "http://whlsl.github.io/"
-    },{
-        title: "添",
-        href: "#"
-    },{
-        title: "加",
-        href: "#"
     }
 ]
