@@ -79,11 +79,6 @@ featured-tags: true                     # whether or not using Feature-Tags
 featured-condition-size: 1         # A tag will be featured if the size of it is more than this condition value
 
 
-#gitment
-comment_gitment_repo: cielOAuth
-comment_gitment_clientId: daf6ad86163a5feeaa22
-comment_gitment_clientSecret: bfe72eb8000e5cf60086fddf0eae5e7bf4180745
-
 # Friends
 friends: [
     {
