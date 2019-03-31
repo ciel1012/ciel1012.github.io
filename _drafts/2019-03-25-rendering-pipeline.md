@@ -7,25 +7,36 @@ author: "Ciel"
 header-img: "img/post-bg-2017.jpg"
 tags:
  - Real-Time Rendering
- - 笔记
 ---
 
 # The Graphics Rendering Pipeline
 
+> 渲染管线的基本结构有四个阶段：应用阶段、几何阶段、光栅化阶段、像素处理阶段
+
 ![\img\in-post\real-time-rendering\2-1](\img\in-post\real-time-rendering\2-1.png)
 
-1. [The Application Stage](#theapplicationstage)
+1. [The Application Stage应用阶段](#theapplicationstage应用阶段)
 
-2. [Geometry Processing](#geometryprocessing)
+2. [Geometry Processing几何阶段](#geometryprocessing几何阶段)
 
-3. [Rasterization](#rasterization)
+3. [Rasterization光栅化阶段](#rasterization光栅化阶段)
 
-4. [Pixel Processing](#pixelprocessing)
+4. [Pixel Processing像素处理阶段](#pixelprocessing像素处理阶段)
 
-### TheApplicationStage
+### TheApplicationStage应用阶段
 
-### GeometryProcessing
+### GeometryProcessing几何阶段
 
-### Rasterization
+1. 模型和视图变换阶段
 
-### PixelProcessing
+2. 顶点着色阶段
+
+3. 投影阶段
+
+4. 裁剪阶段
+
+5. 屏幕映射阶段
+
+### Rasterization光栅化阶段
+
+### PixelProcessing像素处理阶段
