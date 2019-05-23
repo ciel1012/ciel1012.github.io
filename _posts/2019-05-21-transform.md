@@ -5,6 +5,7 @@ subtitle:   "\"《Real-Time Rendering 4th》笔记——第四章 转换\""
 date:       2019-05-21
 author:     "Ciel"
 header-img: "img/post-bg-rtr.jpg"
+mathjax: true
 tags:
     - Real-Time Rendering
     - 笔记
