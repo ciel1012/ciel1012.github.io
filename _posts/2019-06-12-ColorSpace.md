@@ -97,7 +97,7 @@ sRGB是一种最常用的Color Profile，是由微软和惠普联合制定的一
 
 ![\img\in-post\pbr\sRGBframebuffer](\img\in-post\pbr\sRGBframebuffer.jpg)
 
-sRGB Frame Buffer是由硬件支持的，刚才所做的变换用Shader也可以实现，sRGB Frame Buffer的转换速度要比它快。安卓手机只有OpenGL ES3.0才可以支持它，所以你会看到开启线性空间必须指定Graphics API为OpenGL ES3.0。需要注意的是Alpha值不做任何变换的，它只支持每通道8位的格式。为什么只支持8位格式后面会说到。
+sRGB Frame Buffer是由硬件支持的，刚才所做的变换用Shader也可以实现，sRGB Frame Buffer的转换速度要比它快。安卓手机只有OpenGL ES3.0才可以支持它，所以你会看到开启线性空间必须指定Graphics API为OpenGL ES3.0。需要注意的是Alpha值不做任何变换的，它只支持每通道8位的格式。
 
 ![\img\in-post\pbr\sRGBframebuffer1](\img\in-post\pbr\sRGBframebuffer1.jpg)
 
@@ -122,6 +122,8 @@ sRGB Sampler也是硬件支持的一个特性，如果勾选sRGB选项，硬件�
 ![\img\in-post\pbr\gamma2](\img\in-post\pbr\gamma2.jpg)
 
 二张图中左边是线性正确值，右边的曝光结果不对，因为这种色温比较温和的颜色，会迅速的曝光，存的这个值在经过sRGB变换了之后已经比原来的值大了。注意右边上眼皮轮廓应用的地方，你会发现有一些黑、有一些蓝色，也是一样的问题，当你做光照计算的时候，冷色调和暖色调的差别已经拉开了，把光照系数加上去，差异变得更大，这就是你发现结果不对的原因。
+
+![\img\in-post\pbr\TosRGB](\img\in-post\pbr\TosRGB.jpg)
 
 #### 选择颜色空间
 
@@ -173,4 +175,4 @@ sRGB编码是为了增加8位颜色的精度，如果你是用了32位浮点数�
 
 [https://connect.unity.com/p/unite-2018-qian-tan-jia-ma-he-xian-xing-yan-se-kong-jian](https://connect.unity.com/p/unite-2018-qian-tan-jia-ma-he-xian-xing-yan-se-kong-jian)
 
-
+[https://blog.csdn.net/u014370148/article/details/79442001](https://blog.csdn.net/u014370148/article/details/79442001)
