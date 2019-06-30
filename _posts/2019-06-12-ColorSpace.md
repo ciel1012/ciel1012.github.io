@@ -8,7 +8,7 @@ header-img: "img/post-bg-rtr.jpg"
 catalog: true
 mathjax: true
 tags:
-    - 笔记
+    - 基础概念
 ---
 
 > PBR有一个很重要的要求，就是要在线性空间中进行计算。
