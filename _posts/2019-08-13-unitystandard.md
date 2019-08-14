@@ -35,7 +35,7 @@ standard shader中两个SubShader语义块，分别对应LOD 300和LOD150。
 
 顶点着色器
 
-```glsl
+```csharp
 VertexOutputForwardBase vertForwardBase (VertexInput v)
 {
     UNITY_SETUP_INSTANCE_ID(v);
@@ -43,7 +43,8 @@ VertexOutputForwardBase vertForwardBase (VertexInput v)
     UNITY_INITIALIZE_OUTPUT(VertexOutputForwardBase, o);
     UNITY_TRANSFER_INSTANCE_ID(v, o);
     UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-
+    
+    //将顶点坐标从局部坐标系转换到裁剪坐标系
     float4 posWorld = mul(unity_ObjectToWorld, v.vertex);
     #if UNITY_REQUIRE_FRAG_WORLDPOS
         #if UNITY_PACK_WORLDPOS_WITH_TANGENT
@@ -55,10 +56,14 @@ VertexOutputForwardBase vertForwardBase (VertexInput v)
         #endif
     #endif
     o.pos = UnityObjectToClipPos(v.vertex);
-
+    
+    //纹理坐标获取
     o.tex = TexCoords(v);
+    //视线方向获取
     o.eyeVec.xyz = NormalizePerVertexNormal(posWorld.xyz - _WorldSpaceCameraPos);
+    //法线坐标从局部坐标系转换到世界坐标系
     float3 normalWorld = UnityObjectToWorldNormal(v.normal);
+    //Tangent向量从从局部坐标系转换到世界坐标系
     #ifdef _TANGENT_TO_WORLD
         float4 tangentWorld = float4(UnityObjectToWorldDir(v.tangent.xyz), v.tangent.w);
 
@@ -74,9 +79,9 @@ VertexOutputForwardBase vertForwardBase (VertexInput v)
 
     //We need this for shadow receving
     UNITY_TRANSFER_LIGHTING(o, v.uv1);
-
+    //环境或光照贴图纹理坐标计算
     o.ambientOrLightmapUV = VertexGIForward(v, posWorld, normalWorld);
-
+    //视差视线计算
     #ifdef _PARALLAXMAP
         TANGENT_SPACE_ROTATION;
         half3 viewDirForParallax = mul (rotation, ObjSpaceViewDir(v.vertex));
@@ -84,15 +89,15 @@ VertexOutputForwardBase vertForwardBase (VertexInput v)
         o.tangentToWorldAndPackedData[1].w = viewDirForParallax.y;
         o.tangentToWorldAndPackedData[2].w = viewDirForParallax.z;
     #endif
-
+    //雾效相关计算
     UNITY_TRANSFER_FOG_COMBINED_WITH_EYE_VEC(o,o.pos);
     return o;
 }
 ```
 
-VertexOutputForwardBase为顶点着色器输出到片段着色器的结构体
+VertexOutputForwardBase为顶点着色器输出到片段着色器的结构体，位于UnityStandardCore.cginc:
 
-```glsl
+```csharp
 struct VertexOutputForwardBase
 {
     UNITY_POSITION(pos);    //定义于HLSLSupport.cginc :  float4 pos : SV_POSITION
@@ -112,6 +117,27 @@ struct VertexOutputForwardBase
     UNITY_VERTEX_OUTPUT_STEREO
 };
 ```
+
+VertexInput为顶点着色器输入结构体，位于UnityStandardInput.cginc:
+
+```csharp
+struct VertexInput
+{
+    float4 vertex   : POSITION;
+    half3 normal    : NORMAL;
+    float2 uv0      : TEXCOORD0;
+    float2 uv1      : TEXCOORD1;
+#if defined(DYNAMICLIGHTMAP_ON) || defined(UNITY_PASS_META)
+    float2 uv2      : TEXCOORD2;
+#endif
+#ifdef _TANGENT_TO_WORLD
+    half4 tangent   : TANGENT;
+#endif
+    UNITY_VERTEX_INPUT_INSTANCE_ID
+};
+```
+
+VertexInput结构体包含了模型空间的顶点坐标，纹理坐标，顶点法线和切线。纹理坐标有三个，第一个是贴图的纹理坐标，第二个是静态光照UV（Bake GI），第三个是动态光照UV（Precompute Realtime GI）。
 
 
 
