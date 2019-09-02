@@ -15,6 +15,22 @@ tags:
 
 内置shader源码可以从官网进行下载。
 
+### CG头文件
+
+- UnityStandardConfig.cginc：用于存放标准着色器配置相关的代码
+
+- UnityStandardCore.cginc：用于存放标准着色器的主要代码（如顶点着色函数、片段着色函数等相关函数）
+
+- UnityStandardInput.cginc：用于存放标准着色器输入结构相关的工具函数与宏
+
+- UnityStandardMeta.cginc：用于存放标准着色器meta通道中会用到的工具函数与宏
+
+- UnityStandardShadow.cginc：用于存放标准着色器阴影贴图采样相关的工具函数与宏
+
+- UnityStandardUtils.cginc：用于存放标准着色器共用的一些工具函数
+
+- UnityStandardBRDF.cginc：用于存放标准着色器处理BRDF材质属性相关的函数与宏
+
 ### Standard Shader
 
 standard shader中两个SubShader语义块，分别对应LOD 300和LOD150。
@@ -31,7 +47,7 @@ standard shader中两个SubShader语义块，分别对应LOD 300和LOD150。
 
 主要分析ForwardBase。
 
-#### vertForwardBase
+### vertForwardBase
 
 顶点着色器
 
@@ -179,7 +195,7 @@ ambientOrLightmapUV在启用光照贴图时xyzw分量存储光照贴图的UV。�
 
 Shade4PointLights 同时处理四盏顶点光，后面的ShadeSHPerVertex 则是计算顶点的球谐光照，这两个函数位于UnityCG.cginc。具体可参考下面两篇文章：[球谐光照（spherical harmonic lighting）解析](https://gameinstitute.qq.com/community/detail/123183)、[Unity3D ShaderLab 之 Shade4PointLights 解读](https://zhuanlan.zhihu.com/p/27842876)
 
-#### fragForwardBaseInternal
+### fragForwardBaseInternal
 
 片元着色器
 
@@ -623,9 +639,9 @@ inline float3 BoxProjectedCubemapDirection (float3 worldRefl, float3 worldPos, f
 
 Emission函数位于UnityStandardInput.cginc中，雾效相关计算位于UnityCG.cginc中。这里不过多讨论，重点放在UNITY_BRDF_PBS函数上。
 
-#### UNITY_BRDF_PBS
+### UNITY_BRDF_PBS
 
-首先是在UnityPBSLighting.cginc中，有三中BRDF的模型实现：
+首先是在UnityPBSLighting.cginc中，有三种BRDF的模型实现：
 
 ```glsl
 // Default BRDF to use:
@@ -645,18 +661,124 @@ Emission函数位于UnityStandardInput.cginc中，雾效相关计算位于UnityC
 #endif
 ```
 
-其中BRDF1_Unity_PBS是主要基于物理的BRDF。借鉴迪斯尼的工作成果，基于Torrance-Sparrow微面模型，公式为：$f(l,v)=\frac{D(h)F(v,h)G(l,v,h)}{4(n\cdot l)(n\cdot v)}$
+这三种实现定义在UnityStandardBRDF.cginc中。其中BRDF3_Unity_PBS是不基于微表面的Normalized Blinn-Phong BRDF，性能消耗最小效果最差。BRDF2_Unity_PBS是基于极简主义的[CookTorrance BRDF](http://www.thetenthplanet.de/archives/255)，是为移动平台而简化的BRDF。效果最好的BRDF1_Unity_PBS是主要基于物理的BRDF。这里主要讨论BRDF1。
 
-$BRDF = kD / pi + kS * (D * V * F) / 4$
+BRDF1借鉴迪斯尼的工作成果，基于Torrance-Sparrow微面模型，公式为：$f(l,v)=\frac{D(h)F(v,h)G(l,v,h)}{4(n\cdot l)(n\cdot v)}$
 
-$I = BRDF * NdotL$
+```glsl
+// Main Physically Based BRDF
+// Derived from Disney work and based on Torrance-Sparrow micro-facet model
+//
+//   BRDF = kD / pi + kS * (D * V * F) / 4
+//   I = BRDF * NdotL
+//
+// * NDF (depending on UNITY_BRDF_GGX):
+//  a) Normalized BlinnPhong
+//  b) GGX
+// * Smith for Visiblity term
+// * Schlick approximation for Fresnel
+half4 BRDF1_Unity_PBS (half3 diffColor, half3 specColor, half oneMinusReflectivity, half smoothness,
+    float3 normal, float3 viewDir,
+    UnityLight light, UnityIndirect gi)
+{
+    float perceptualRoughness = SmoothnessToPerceptualRoughness (smoothness);
+    float3 halfDir = Unity_SafeNormalize (float3(light.dir) + viewDir);
 
-### CG头文件
+// NdotV should not be negative for visible pixels, but it can happen due to perspective projection and normal mapping
+// In this case normal should be modified to become valid (i.e facing camera) and not cause weird artifacts.
+// but this operation adds few ALU and users may not want it. Alternative is to simply take the abs of NdotV (less correct but works too).
+// Following define allow to control this. Set it to 0 if ALU is critical on your platform.
+// This correction is interesting for GGX with SmithJoint visibility function because artifacts are more visible in this case due to highlight edge of rough surface
+// Edit: Disable this code by default for now as it is not compatible with two sided lighting used in SpeedTree.
+#define UNITY_HANDLE_CORRECTLY_NEGATIVE_NDOTV 0
 
-- UnityStandardConfig.cginc：用于存放标准着色器配置相关的代码
-- UnityStandardCore.cginc：用于存放标准着色器的主要代码（如顶点着色函数、片段着色函数等相关函数）
-- UnityStandardInput.cginc：用于存放标准着色器输入结构相关的工具函数与宏
-- UnityStandardMeta.cginc：用于存放标准着色器meta通道中会用到的工具函数与宏
-- UnityStandardShadow.cginc：用于存放标准着色器阴影贴图采样相关的工具函数与宏
-- UnityStandardUtils.cginc：用于存放标准着色器共用的一些工具函数
-- UnityStandardBRDF.cginc：用于存放标准着色器处理BRDF材质属性相关的函数与宏
+#if UNITY_HANDLE_CORRECTLY_NEGATIVE_NDOTV
+    // The amount we shift the normal toward the view vector is defined by the dot product.
+    half shiftAmount = dot(normal, viewDir);
+    normal = shiftAmount < 0.0f ? normal + viewDir * (-shiftAmount + 1e-5f) : normal;
+    // A re-normalization should be applied here but as the shift is small we don't do it to save ALU.
+    //normal = normalize(normal);
+
+    float nv = saturate(dot(normal, viewDir)); // TODO: this saturate should no be necessary here
+#else
+    half nv = abs(dot(normal, viewDir));    // This abs allow to limit artifact
+#endif
+
+    float nl = saturate(dot(normal, light.dir));
+    float nh = saturate(dot(normal, halfDir));
+
+    half lv = saturate(dot(light.dir, viewDir));
+    half lh = saturate(dot(light.dir, halfDir));
+
+    // Diffuse term
+    half diffuseTerm = DisneyDiffuse(nv, nl, lh, perceptualRoughness) * nl;
+
+    // Specular term
+    // HACK: theoretically we should divide diffuseTerm by Pi and not multiply specularTerm!
+    // BUT 1) that will make shader look significantly darker than Legacy ones
+    // and 2) on engine side "Non-important" lights have to be divided by Pi too in cases when they are injected into ambient SH
+    float roughness = PerceptualRoughnessToRoughness(perceptualRoughness);
+#if UNITY_BRDF_GGX
+    // GGX with roughtness to 0 would mean no specular at all, using max(roughness, 0.002) here to match HDrenderloop roughtness remapping.
+    roughness = max(roughness, 0.002);
+    float V = SmithJointGGXVisibilityTerm (nl, nv, roughness);
+    float D = GGXTerm (nh, roughness);
+#else
+    // Legacy
+    half V = SmithBeckmannVisibilityTerm (nl, nv, roughness);
+    half D = NDFBlinnPhongNormalizedTerm (nh, PerceptualRoughnessToSpecPower(perceptualRoughness));
+#endif
+
+    float specularTerm = V*D * UNITY_PI; // Torrance-Sparrow model, Fresnel is applied later
+
+#   ifdef UNITY_COLORSPACE_GAMMA
+        specularTerm = sqrt(max(1e-4h, specularTerm));
+#   endif
+
+    // specularTerm * nl can be NaN on Metal in some cases, use max() to make sure it's a sane value
+    specularTerm = max(0, specularTerm * nl);
+#if defined(_SPECULARHIGHLIGHTS_OFF)
+    specularTerm = 0.0;
+#endif
+
+    // surfaceReduction = Int D(NdotH) * NdotH * Id(NdotL>0) dH = 1/(roughness^2+1)
+    half surfaceReduction;
+#   ifdef UNITY_COLORSPACE_GAMMA
+        surfaceReduction = 1.0-0.28*roughness*perceptualRoughness;      // 1-0.28*x^3 as approximation for (1/(x^4+1))^(1/2.2) on the domain [0;1]
+#   else
+        surfaceReduction = 1.0 / (roughness*roughness + 1.0);           // fade \in [0.5;1]
+#   endif
+
+    // To provide true Lambert lighting, we need to be able to kill specular completely.
+    specularTerm *= any(specColor) ? 1.0 : 0.0;
+
+    half grazingTerm = saturate(smoothness + (1-oneMinusReflectivity));
+    half3 color =   diffColor * (gi.diffuse + light.color * diffuseTerm)
+                    + specularTerm * light.color * FresnelTerm (specColor, lh)
+                    + surfaceReduction * gi.specular * FresnelLerp (specColor, grazingTerm, nv);
+
+    return half4(color, 1);
+}
+```
+
+首先看函数的输入参数
+
+- diffColor——漫反射颜色
+
+- specColor——镜面反射颜色
+
+- oneMinusReflectivity——1减去反射率
+
+- smoothness——光滑度
+
+- normal——法线方向
+
+- viewDir——视线方向
+
+- light——unity中光源信息结构体，包含光照颜色color和光源方向dir
+
+- gi——unity中间接光照信息结构体，包含漫反射颜色diffuse和镜面反射颜色specular
+
+
+
+
