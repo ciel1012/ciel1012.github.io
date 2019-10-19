@@ -240,10 +240,12 @@ LPPV 可以为大型动态游戏对象(不能使用烘焙的光照贴图的对�
 
 ## 参考资料
 
-https://docs.unity3d.com/Manual/BestPracticeLightingPipelines.html
+[https://docs.unity3d.com/Manual/BestPracticeLightingPipelines.html](https://docs.unity3d.com/Manual/BestPracticeLightingPipelines.html)
 
 [https://docs.unity3d.com/Manual/LightingInUnity.html](https://docs.unity3d.com/Manual/LightingInUnity.html)
 
 [https://docs.unity3d.com/Manual/GlobalIllumination.html](https://docs.unity3d.com/Manual/GlobalIllumination.html)
 
 [https://docs.unity3d.com/Manual/LightModes.html](https://docs.unity3d.com/Manual/LightModes.html)
+
+
