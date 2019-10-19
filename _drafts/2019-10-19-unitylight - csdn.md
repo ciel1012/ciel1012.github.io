@@ -1,21 +1,8 @@
----
-layout:     post
-title:      "Unity Lighting"
-subtitle:   "\"Unity中光照渲染相关知识点\""
-date:       2019-10-19
-author:     "Ciel"
-header-img: "img/post-bg-unity.jpg"
-catalog: true
-mathjax: false
-tags:
-    - Unity
----
-
 # Unity Lighting
 
 > 想要在unity中实现好的渲染效果，对引擎光照的了解是必不可少的。下图是官方给出的Lighting pipeline 流程图，针对图中各点进行总结，但没有太过详细，具体可深入查阅相关资料。
 
-![\img\in-post\unity-lighting\BestPracticeLightingPipeline15](\img\in-post\unity-lighting\BestPracticeLightingPipeline15.svg)
+![\img\in-post\unity-lighting\BestPracticeLightingPipeline15](..\img\in-post\unity-lighting\BestPracticeLightingPipeline15.svg)
 
 ## Render Pipelines 渲染管线
 
@@ -37,7 +24,7 @@ tags:
 
 如何选择需要结合项目实际需求，可参考下图：
 
-![\img\in-post\unity-lighting\BestPracticeLightingPipeline16](\img\in-post\unity-lighting\BestPracticeLightingPipeline16.svg)
+![\img\in-post\unity-lighting\BestPracticeLightingPipeline16](..\img\in-post\unity-lighting\BestPracticeLightingPipeline16.svg)
 
 ## Global Illumination 全局光照
 
@@ -76,7 +63,7 @@ tags:
 
    默认情况下，两种方案在Unity的照明面板(Lighting>Scene)中都启用。然后可以由每个灯单独控制(Inspector>Light>Mode)。可以通过取消其中一种方案来覆盖灯光设置。
 
-![\img\in-post\unity-lighting\BestPracticeLightingPipeline4](\img\in-post\unity-lighting\BestPracticeLightingPipeline4.svg)
+![\img\in-post\unity-lighting\BestPracticeLightingPipeline4](..\img\in-post\unity-lighting\BestPracticeLightingPipeline4.svg)
 
 ## Light Mode
 
@@ -101,7 +88,7 @@ tags:
 
      - 只使用Baked GI时不产生间接光照
 
-![\img\in-post\unity-lighting\noGI](\img\in-post\unity-lighting\noGI.png)
+![\img\in-post\unity-lighting\noGI](..\img\in-post\unity-lighting\noGI.png)
 
 2. Baked
 
@@ -139,15 +126,15 @@ tags:
 
 Light Mode 对应 Lighting 设置
 
-![\img\in-post\unity-lighting\3GI](\img\in-post\unity-lighting\3GI.png)
+![\img\in-post\unity-lighting\3GI](..\img\in-post\unity-lighting\3GI.png)
 
 ## Mixed Lighting Mode
 
-1. Baked Indirect 烘焙间接光![\img\in-post\unity-lighting\mix1](\img\in-post\unity-lighting\mix1.png)
+1. Baked Indirect 烘焙间接光![\img\in-post\unity-lighting\mix1](..\img\in-post\unity-lighting\mix1.png)
 
-2. Substractive 烘焙直接光照、间接光照和阴影![\img\in-post\unity-lighting\mix2](\img\in-post\unity-lighting\mix2.png)
+2. Substractive 烘焙直接光照、间接光照和阴影![\img\in-post\unity-lighting\mix2](..\img\in-post\unity-lighting\mix2.png)
 
-3. Shadowmask 烘焙间接光照和阴影![\img\in-post\unity-lighting\mix3](\img\in-post\unity-lighting\mix3.png)
+3. Shadowmask 烘焙间接光照和阴影![\img\in-post\unity-lighting\mix3](..\img\in-post\unity-lighting\mix3.png)
 
 - Shadowmask Mode可以在Edit > Preferences > Quality设置
 
@@ -155,13 +142,13 @@ Light Mode 对应 Lighting 设置
 
 2. Distance Shadowmask 根据设置的Shadow Distance参数对实时阴影和烘焙阴影进行融合
 
-![\img\in-post\unity-lighting\mix4](\img\in-post\unity-lighting\mix4.jpg)
+![\img\in-post\unity-lighting\mix4](..\img\in-post\unity-lighting\mix4.jpg)
 
 如何选择Light Mode
 
-![\img\in-post\unity-lighting\BestPracticeLightingPipeline12](\img\in-post\unity-lighting\BestPracticeLightingPipeline12.svg)
+![\img\in-post\unity-lighting\BestPracticeLightingPipeline12](..\img\in-post\unity-lighting\BestPracticeLightingPipeline12.svg)
 
-![\img\in-post\unity-lighting\BestPracticeLightingPipeline5](\img\in-post\unity-lighting\BestPracticeLightingPipeline5.svg)
+![\img\in-post\unity-lighting\BestPracticeLightingPipeline5](..\img\in-post\unity-lighting\BestPracticeLightingPipeline5.svg)
 
 ## Light  Sources
 
@@ -220,7 +207,7 @@ lightmaps存储关于光到达场景表面的照明信息，而light probes存�
 
 unity通过在世界上放置样本点，然后从各个方向捕捉光线来做到这一点。这些点记录的颜色信息被编码成一组值(或“系数”)，这些值可以在游戏过程中快速计算。在Unity中，称这些采样点为“光照探针”。
 
-![\img\in-post\unity-lighting\lightprobe](\img\in-post\unity-lighting\lightprobe.png)
+![\img\in-post\unity-lighting\lightprobe](..\img\in-post\unity-lighting\lightprobe.png)
 
 为了得到更好的计算结果，在照明变化的区域（例如阴影或颜色过渡）周围以更大的密度放置这些采样点。
 
@@ -236,7 +223,7 @@ LPPV 可以为大型动态游戏对象(不能使用烘焙的光照贴图的对�
 
 标准着色器（Standard Shader）支持该特性。如果想将该特性添加到自定义着色器中，需要使用 ShadeSHPerPixel 函数（该函数位于UnityStandardUtils.cginc）
 
-![\img\in-post\unity-lighting\Unity Lighting Modes Reference Card](\img\in-post\unity-lighting\Unity Lighting Modes Reference Card.jpg)
+![\img\in-post\unity-lighting\Unity Lighting Modes Reference Card](..\img\in-post\unity-lighting\Unity Lighting Modes Reference Card.jpg)
 
 ## 参考资料
 
