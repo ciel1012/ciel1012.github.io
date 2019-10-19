@@ -236,6 +236,8 @@ LPPV 可以为大型动态游戏对象(不能使用烘焙的光照贴图的对�
 
 标准着色器（Standard Shader）支持该特性。如果想将该特性添加到自定义着色器中，需要使用 ShadeSHPerPixel 函数（该函数位于UnityStandardUtils.cginc）
 
+## Unity Lighting Modes Reference Card
+
 ![\img\in-post\unity-lighting\Unity Lighting Modes Reference Card](\img\in-post\unity-lighting\Unity Lighting Modes Reference Card.jpg)
 
 ## 参考资料
@@ -247,5 +249,3 @@ LPPV 可以为大型动态游戏对象(不能使用烘焙的光照贴图的对�
 [https://docs.unity3d.com/Manual/GlobalIllumination.html](https://docs.unity3d.com/Manual/GlobalIllumination.html)
 
 [https://docs.unity3d.com/Manual/LightModes.html](https://docs.unity3d.com/Manual/LightModes.html)
-
-
