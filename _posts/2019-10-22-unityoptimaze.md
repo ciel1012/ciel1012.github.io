@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "Optimizing Graphics Performance"
-subtitle:   "\"Unity 优化总结\""
+subtitle:   "\"Unity常见优化总结\""
 date:       2019-10-22
 author:     "Ciel"
 header-img: "img/post-bg-unity.jpg"
@@ -11,7 +11,7 @@ tags:
     - Unity
 ---
 
-# Optimizing Graphics Performance
+# Unity Optimizing 
 
 ## CPU：减少draw call
 
