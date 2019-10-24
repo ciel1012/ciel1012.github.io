@@ -6,7 +6,7 @@ date:       2019-10-23
 author:     "Ciel"
 header-img: "img/post-bg-unity.jpg"
 catalog: true
-mathjax: false
+mathjax: true
 tags:
     - Unity
 ---

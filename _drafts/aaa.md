@@ -6,7 +6,7 @@ date:       2019-01-01
 author:     "Ciel"
 header-img: "img/post-bg-rtr.jpg"
 catalog: true
-mathjax: false
+mathjax: true
 tags:
     - 填写标签，根据标题改图片
 ---
