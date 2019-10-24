@@ -11,8 +11,6 @@ tags:
     - Unity
 ---
 
-# 大标题
-
 > 帮美术制作特效Shader时，美术反映了一个问题：在K动画时材质颜色会突然变化。一开始以为是Shader计算问题，后来才发现只要是HDR Color属性，在k动画时都会有这个问题，因此记录一下。
 
 # HDR简介
@@ -27,17 +25,17 @@ tags:
 
 取色器是这样的：
 
-![hdrcolor](F:\234\ciel1012.github.io\img\in-post\unity\hdrcolor1.jpg)
+![hdrcolor](/img/in-post/unity/hdrcolor1.jpg)
 
 # 问题描述
 
 在Animation面板K动画时，如果设置了HDR颜色且Intensity不为0，则颜色会突然变化。如下图，使用UnlitShader并添加一个HDR Color属性：
 
-![hdrcolor2](F:\234\ciel1012.github.io\img\in-post\unity\hdrcolor2.gif)
+![hdrcolor2](/img/in-post/unity/hdrcolor2.gif)
 
 当你关掉Animation时，颜色又突然恢复正常：
 
-![close animation](F:\234\ciel1012.github.io\img\in-post\unity\hdrcolor3.gif)
+![close animation](/img/in-post/unity/hdrcolor3.gif)
 
 虽说这个问题只有在K动画时才出现，不影响正常材质表现，但显然会让美术在制作资源时受到困扰，因此还是需要想个办法避免这个问题。
 
@@ -45,13 +43,13 @@ tags:
 
 首先做个测试，分析下Intensity是如何影响颜色值的。
 
-![color test](F:\234\ciel1012.github.io\img\in-post\unity\hdrcolor4.gif)
+![color test](/img/in-post/unity/hdrcolor4.gif)
 
 可以看到Intensity并不是线性影响颜色值的，根据调整Intensity时R值的变化，推测计算公式为$color = color * 2^{Intensity}$
 
 修改Shader，使用普通Color，效果对比如下：
 
-![hdr和nohdr效果对比](F:\234\ciel1012.github.io\img\in-post\unity\hdrcolor5.jpg)
+![hdr和nohdr效果对比](/img/in-post/unity/hdrcolor5.jpg)
 
 可以看到效果差不多，说明猜测正确。修改后可以正常K动画，不会出现颜色突变问题。
 
@@ -130,4 +128,4 @@ Shader "Unlit/NewUnlitShader"
 
 测试过程中发现调整Intensity后，再打开取色器，Intensity值自动发生了变化，可能和unity内部实现机制有关。如果以后找到原因会再进行补充。
 
-![question](F:\234\ciel1012.github.io\img\in-post\unity\hdrcolor6.gif)
+![question](/img/in-post/unity/hdrcolor6.gif)
