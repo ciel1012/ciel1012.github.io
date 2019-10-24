@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Unity HDR Color 采坑小记 "
+title:      "Unity HDR Color 踩坑小记 "
 subtitle:   "\"HDR颜色在K动画时显示异常\""
 date:       2019-10-23
 author:     "Ciel"
@@ -47,9 +47,13 @@ tags:
 
 ![color test](F:\234\ciel1012.github.io\img\in-post\unity\hdrcolor4.gif)
 
-可以看到Intensity并不是线性影响颜色值的，根据调整Intensity时R值的变化，推测
+可以看到Intensity并不是线性影响颜色值的，根据调整Intensity时R值的变化，推测计算公式为$color = color * 2^{Intensity}$
 
+修改Shader，使用普通Color，效果对比如下：
 
+![hdr和nohdr效果对比](F:\234\ciel1012.github.io\img\in-post\unity\hdrcolor5.jpg)
+
+可以看到效果差不多，说明猜测正确。修改后可以正常K动画，不会出现颜色突变问题。
 
 附测试Shader
 
@@ -109,7 +113,6 @@ Shader "Unlit/NewUnlitShader"
                 // sample the texture
                 //fixed4 col = tex2D(_MainTex, i.uv)*_Color;
                 fixed4 col = tex2D(_MainTex, i.uv)*_Color*pow(2,_Intensity);
-
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
 
@@ -121,3 +124,10 @@ Shader "Unlit/NewUnlitShader"
 }
 ```
 
+# 其他疑问
+
+虽说暂时解决了这个问题，但是并没有找到问题的原因。
+
+测试过程中发现调整Intensity后，再打开取色器，Intensity值自动发生了变化，可能和unity内部实现机制有关。如果以后找到原因会再进行补充。
+
+![question](F:\234\ciel1012.github.io\img\in-post\unity\hdrcolor6.gif)
