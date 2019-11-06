@@ -13,6 +13,8 @@ tags:
 
 > 帮美术制作特效Shader时，美术反映了一个问题：在K动画时材质颜色会突然变化。一开始以为是Shader计算问题，后来才发现只要是HDR Color属性，在k动画时都会有这个问题，因此记录一下。
 
+**这个问题后来问了unity 工程师，详细情况补充在其他疑问里了。**
+
 # HDR简介
 
 普通Color的范围是[0,1]，HDR颜色亮度值可以超过1，通过这个值可以配合后期Bloom效果做出泛光效果。 
@@ -129,3 +131,19 @@ Shader "Unlit/NewUnlitShader"
 测试过程中发现调整Intensity后，再打开取色器，Intensity值自动发生了变化，可能和unity内部实现机制有关。如果以后找到原因会再进行补充。
 
 ![question](/img/in-post/unity/hdrcolor6.gif)
+
+————————————————————分割线————————————————————
+
+后来就这个问题问了官方，原来是颜色空间，Gamma校正的原因。
+
+unity工程师回复如下：
+
+如果项目的颜色空间是在线性空间下，Animation编辑器中设置的Color会经过一次Gamma2.2的颜色校正，而在Material编辑器中设置的Color不会进行Gamma校正，这样会出现两边数值相同时颜色显示却不一样的情况，也就是“K动画时颜色突然变化”的原因。
+
+为了解决Material和Animation动画编辑器两边不一致的情况，可以在Shader的Color属性前增加[Gamma]描述，如下所示：
+
+```c
+[Gamma][HDR]_Color("Color", Color) = (0,0,0,0)
+```
+
+这样通过Animation编辑器中编辑出来的颜色显示与Material中的就是一致的，也不会出现“K动画时颜色突然变化”的问题了。
