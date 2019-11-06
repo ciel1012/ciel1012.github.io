@@ -261,7 +261,7 @@ speed是移动速度，Frequency是频率，Amplitude是幅度。
 
 考虑使用半透明渲染改善（性能消耗加大）：
 
-```
+```c
 half alpha = saturate(eyeDepthSubScreenPos-_AlphaWidth);
 fixed4 col = fixed4( diffuse + specular + rim ,alpha);
 ```
