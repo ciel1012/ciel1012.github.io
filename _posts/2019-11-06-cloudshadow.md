@@ -17,7 +17,7 @@ tags:
 
 达到的效果如下：
 
-![](../img/in-post/shader/cloudshadow1.jpg)
+![](/img/in-post/shader/cloudshadow.gif)
 
 ## 实现方案
 
@@ -64,11 +64,11 @@ tags:
 
 未修改前面板：
 
-![未修改前](../img/in-post/shader/cloudshadow0.jpg)
+![未修改前](/img/in-post/shader/cloudshadow0.jpg)
 
 修改后面板：
 
-![修改后](../img/in-post/shader/cloudshadow01.jpg)
+![修改后](/img/in-post/shader/cloudshadow01.jpg)
 
 ## 具体操作
 
