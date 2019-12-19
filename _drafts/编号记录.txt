@@ -1,1 +1,2 @@
-Gooch shading model [561]
+卡通渲染 Gooch shading model [561]
+介绍阴影的书 [412,1902]
