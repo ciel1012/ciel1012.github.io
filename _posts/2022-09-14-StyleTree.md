@@ -20,9 +20,8 @@ B站链接：[https://www.bilibili.com/video/BV15L4y1q74a](https://www.bilibili.
 
 视频是一年前的了，评论都是求教程的，那就写篇教程吧\_(:з」∠)\_
 
-## 1.插片模型，双面渲染
-
-### 1.插片模型，双面渲染
+### 渲染方式
+#### 1.插片模型，双面渲染
 
 非常常用的制作方式，网上教程很多就不多说了，直接放截图（和视频里不一样是因为录完我又改了材质）
 
@@ -32,7 +31,7 @@ B站链接：[https://www.bilibili.com/video/BV15L4y1q74a](https://www.bilibili.
 
 ![截图.png](/img/in-post/stylized-tree/image3.png)
 
-### 2.特殊UV模型，公告板渲染
+#### 2.特殊UV模型，公告板渲染
 
 渲染思路来源：<https://www.youtube.com/watch?v=iASMFba7GeI>
 
@@ -72,7 +71,7 @@ Unreal屏幕坐标原点在左上角，所以UV坐标从0-1转换到-1-1时，�
 
 ![截图.png](/img/in-post/stylized-tree/image10.png)
 
-## 程序化建模
+### 程序化建模
 
 不同模型对应的是不同渲染方式，片状指的是用插片，块状指的是特殊处理UV的模型。
 
@@ -88,7 +87,7 @@ Houdini Labs quick basic tree
 
 ![截图.png](/img/in-post/stylized-tree/image13.png)
 
-### 树干曲线
+#### 树干曲线
 
 输入初始主干曲线，设置pscale（树干粗细），lift（分支抬起角度）
 
@@ -122,7 +121,7 @@ Houdini Labs quick basic tree
 
 ![截图.png](/img/in-post/stylized-tree/image21.png)
 
-### 树干模型
+#### 树干模型
 
 sweep曲线得到树干模型
 
@@ -132,7 +131,7 @@ sweep曲线得到树干模型
 
 ![截图.png](/img/in-post/stylized-tree/image23.png)
 
-### 树叶大型
+#### 树叶大型
 
 选取主干分支的末端
 
@@ -150,7 +149,7 @@ Particle Fluid Surface节点可以根据点生成表面模型，重新计算表�
 
 ![截图.png](/img/in-post/stylized-tree/image27.png)
 
-### 片状树叶
+#### 片状树叶
 
 插片树叶模型，也可以导入外部模型。
 
@@ -164,7 +163,7 @@ Particle Fluid Surface节点可以根据点生成表面模型，重新计算表�
 
 ![截图.png](/img/in-post/stylized-tree/image30.png)
 
-### 块状树叶
+#### 块状树叶
 
 树叶大型删除面只保留点，重新计算粒子流体表面后减面。
 
