@@ -16,9 +16,11 @@ tags:
 
 > 网上有很多制作风格化树的教程，不过大多是建模软件手动处理。我分析了下制作过程，使用Houdini程序化去处理。
 
-B站链接：https://www.bilibili.com/video/BV15L4y1q74a（视频是一年前的了，评论都是求教程的，那就写篇教程吧\_(:з」∠)\_）
+B站链接：[https://www.bilibili.com/video/BV15L4y1q74a](https://www.bilibili.com/video/BV15L4y1q74a)
 
-## 渲染方式
+视频是一年前的了，评论都是求教程的，那就写篇教程吧\_(:з」∠)\_
+
+## 1.插片模型，双面渲染
 
 ### 1.插片模型，双面渲染
 
